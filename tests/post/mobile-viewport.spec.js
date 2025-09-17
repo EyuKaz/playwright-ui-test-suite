@@ -3,24 +3,22 @@ const { LoginPage } = require('../../pages/login-page');
 const { DashboardPage } = require('../../pages/dashboard-page');
 const { credentials } = require('../../utils/test-data');
 
-test.describe('Login Tests', () => {
+test.describe('Mobile Viewport Tests', () => {
   let loginPage, dashboardPage;
 
   test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 }); // iPhone 12 viewport
     loginPage = new LoginPage(page);
     dashboardPage = new DashboardPage(page);
     await loginPage.navigate();
-  });
-
-  test('Successful login with valid credentials', async () => {
     await loginPage.login(credentials.validUsername, credentials.validPassword);
-    await expect(dashboardPage.welcomePanel).toBeVisible();
-    await expect(dashboardPage.page).toHaveURL(/wp-admin/);
   });
 
-  test('Failed login with invalid credentials', async () => {
-    await loginPage.login(credentials.invalidUsername, credentials.invalidPassword);
-    const errorMessage = await loginPage.getErrorMessage();
-    await expect(errorMessage).toContain('ERROR: Invalid username');
+  test('Dashboard renders correctly on mobile', async () => {
+    await expect(dashboardPage.welcomePanel).toBeVisible();
+    const mobileMenu = page.locator('#wp-admin-bar-menu-toggle');
+    await expect(mobileMenu).toBeVisible();
+    await mobileMenu.click();
+    await expect(page.locator('#adminmenu')).toBeVisible();
   });
 });

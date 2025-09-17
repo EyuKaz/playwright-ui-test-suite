@@ -10,7 +10,7 @@ class LoginPage {
   }
 
   async navigate() {
-    await this.page.goto('http://localhost/wordpress/wp-login.php');
+    await this.page.goto('https://s1.demo.opensourcecms.com/wordpress/wp-login.php');
   }
 
   async login(username, password) {

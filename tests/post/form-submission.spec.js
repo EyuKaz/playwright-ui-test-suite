@@ -1,8 +1,8 @@
 const { test, expect } = require('@playwright/test');
-const { LoginPage } = require('../pages/login-page');
-const { DashboardPage } = require('../pages/dashboard-page');
-const { PostPage } = require('../pages/post-page');
-const { credentials, postData } = require('../utils/test-data');
+const { LoginPage } = require('../../pages/login-page');
+const { DashboardPage } = require('../../pages/dashboard-page');
+const { PostPage } = require('../../pages/post-page');
+const { credentials, postData } = require('../../utils/test-data');
 
 test.describe('Form Submission Tests', () => {
   let loginPage, dashboardPage, postPage;
